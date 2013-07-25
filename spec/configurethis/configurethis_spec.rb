@@ -34,6 +34,11 @@ describe Configurethis do
   describe "using configured values" do
     Given { Configurethis.root_path = File.join(File.dirname(__FILE__), 'support/config') }
 
+    context "when the classes config file does not exist" do
+      Given (:config) { MissingConfiguration }
+      Then  { expect{ config.some_value }.to raise_error(RuntimeError, "ERROR: MissingConfiguration has not been configured.") }
+    end
+
     context "when values are set" do
       Given (:config) { RiakConfig }
       Then  { expect(config.pb_port).to   eq(9002) }

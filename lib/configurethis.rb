@@ -28,15 +28,17 @@ module Configurethis
 
   def configuration
     @configuration ||= File.open(configuration_path){ |f| YAML::load(f) }
+  rescue Exception => caught
+    raise "ERROR: #{self} has not been configured."
   end
   protected :configuration
 
-  private
   def configuration_file
     Maybe(@configuration_file) { underscore(self.to_s) + '.yml' }
   end
+  private :configuration_file
 
-  # File activesupport/lib/active_support/inflector/methods.rb, line 89
+  # Borrowed from activesupport/lib/active_support/inflector/methods.rb
   def underscore(camel_cased_word)
     word = camel_cased_word.to_s.dup
     word.gsub!('::', '/')
@@ -46,5 +48,6 @@ module Configurethis
     word.downcase!
     word
   end
+  private :underscore
 
 end
