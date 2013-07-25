@@ -24,12 +24,14 @@ module Configurethis
 
   def method_missing(method, *args)
     configuration.fetch(method.to_s)
+  rescue KeyError
+    raise "'#{method.to_s}' is not configured in #{configuration_path}"
   end
 
   def configuration
     @configuration ||= File.open(configuration_path){ |f| YAML::load(f) }
   rescue Exception => caught
-    raise "ERROR: #{self} has not been configured."
+    raise "Could not locate configuration file for #{self} at #{configuration_path}"
   end
   protected :configuration
 

@@ -36,7 +36,12 @@ describe Configurethis do
 
     context "when the classes config file does not exist" do
       Given (:config) { MissingConfiguration }
-      Then  { expect{ config.some_value }.to raise_error(RuntimeError, "ERROR: MissingConfiguration has not been configured.") }
+      Then  { expect{ config.some_value }.to raise_error(RuntimeError, "Could not locate configuration file for MissingConfiguration at #{config.configuration_path}") }
+    end
+
+    context "when the value has not been set" do
+      Given (:config) { RiakConfig }
+      Then { expect{ config.storage_backend }.to raise_error(RuntimeError, "'storage_backend' is not configured in #{config.configuration_path}") }
     end
 
     context "when values are set" do
