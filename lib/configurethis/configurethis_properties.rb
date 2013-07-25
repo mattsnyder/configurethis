@@ -8,4 +8,8 @@ class ConfigurethisProperties
     @@root_path ||= 'config'
   end
 
+  def self.defaults
+    @@root_path = nil
+  end
+
 end

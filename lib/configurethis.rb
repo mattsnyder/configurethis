@@ -8,6 +8,10 @@ module Configurethis
     def root_path=(path)
       ConfigurethisProperties.root_path = path
     end
+
+    def defaults
+      ConfigurethisProperties.defaults
+    end
   end
 
   def configure_this_with(path)
@@ -17,6 +21,15 @@ module Configurethis
   def configuration_path
     File.join(ConfigurethisProperties.root_path, configuration_file)
   end
+
+  def method_missing(method, *args)
+    configuration.fetch(method.to_s)
+  end
+
+  def configuration
+    @configuration ||= File.open(configuration_path){ |f| YAML::load(f) }
+  end
+  protected :configuration
 
   private
   def configuration_file

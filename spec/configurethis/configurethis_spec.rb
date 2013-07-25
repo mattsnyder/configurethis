@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Configurethis do
   describe "making a class configurable from a yml file" do
     context "when the base path is unmodified" do
+      Given { Configurethis.defaults }
       Given (:klass) { ConventionalPath }
       Then  { expect(klass.configuration_path).to eql('config/conventional_path.yml') }
     end
@@ -27,6 +28,17 @@ describe Configurethis do
         end
 
       end
+    end
+  end
+
+  describe "using configured values" do
+    Given { Configurethis.root_path = File.join(File.dirname(__FILE__), 'support/config') }
+
+    context "when values are set" do
+      Given (:config) { RiakConfig }
+      Then  { expect(config.pb_port).to   eq(9002) }
+      And   { expect(config.http_port).to eq(9000) }
+      And   { expect(config.host).to      eql('127.0.0.1') }
     end
   end
 end
