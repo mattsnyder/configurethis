@@ -5,7 +5,7 @@ class ConfigurethisProperties
   end
 
   def self.root_path
-    @@root_path
+    @@root_path ||= 'config'
   end
 
 end

@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe Configurethis do
   describe "making a class configurable from a yml file" do
+    context "when the base path is unmodified" do
+      Given (:klass) { ConventionalPath }
+      Then  { expect(klass.configuration_path).to eql('config/conventional_path.yml') }
+    end
+
     context "when the base configuration path has been modified" do
       Given { Configurethis.root_path = './spec/support' }
 
