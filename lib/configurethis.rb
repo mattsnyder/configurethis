@@ -14,6 +14,12 @@ module Configurethis
     end
   end
 
+  def set_root=(value)
+    @configuration = configuration.fetch(value.to_s)
+  rescue KeyError
+    raise "'#{value.to_s}' is not configured in #{configuration_path}"
+  end
+
   def configure_this_with(path)
     @configuration_file = path
   end

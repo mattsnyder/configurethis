@@ -31,6 +31,21 @@ describe Configurethis do
     end
   end
 
+  describe "specifying a root config value for all access" do
+    Given { Configurethis.root_path = File.join(File.dirname(__FILE__), 'support/config') }
+
+    context "when the root value exists" do
+      Given (:rails_config) { RailsAppConfig }
+      Given { rails_config.set_root = :development }
+      Then  { expect(rails_config.assets.compile).to be_false }
+    end
+
+    context "when the root value does not exist" do
+      Given (:rails_config) { RailsAppConfig }
+      Then  { expect{ rails_config.set_root = :qa }.to raise_error(RuntimeError, "'qa' is not configured in #{rails_config.configuration_path}") }
+    end
+  end
+
   describe "using configured values" do
     Given { Configurethis.root_path = File.join(File.dirname(__FILE__), 'support/config') }
 
