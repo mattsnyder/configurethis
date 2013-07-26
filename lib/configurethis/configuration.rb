@@ -10,7 +10,7 @@ module Configurethis
 
     def root=(key)
       @values = load_configuration.fetch(key)
-    rescue ::KeyError
+    rescue ::IndexError
       raise "'#{key}' is not configured in #{path}"
     end
 
@@ -19,7 +19,7 @@ module Configurethis
       val = @values.fetch(key)
       return ValueContainer.new(val, path) if val.is_a?(Hash)
       val
-    rescue ::KeyError
+    rescue ::IndexError
       raise "'#{key}' is not configured in #{path}"
     end
 
