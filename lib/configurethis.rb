@@ -1,5 +1,6 @@
+require 'ostruct'
 require "configurethis/version"
-require "configurethis/null_object"
+require "configurethis/value_container"
 require "configurethis/configurethis_properties"
 
 module Configurethis
@@ -23,7 +24,9 @@ module Configurethis
   end
 
   def method_missing(method, *args)
-    configuration.fetch(method.to_s)
+    val = configuration.fetch(method.to_s)
+    return ValueContainer.new(val, configuration_path) if val.is_a?(Hash)
+    val
   rescue KeyError
     raise "'#{method.to_s}' is not configured in #{configuration_path}"
   end
@@ -36,11 +39,12 @@ module Configurethis
   protected :configuration
 
   def configuration_file
-    Maybe(@configuration_file) { underscore(self.to_s) + '.yml' }
+    @configuration_file ||= underscore(self.to_s) + '.yml'
   end
   private :configuration_file
 
   # Borrowed from activesupport/lib/active_support/inflector/methods.rb
+  # No need to bring in ActiveSupport for just this.
   def underscore(camel_cased_word)
     word = camel_cased_word.to_s.dup
     word.gsub!('::', '/')

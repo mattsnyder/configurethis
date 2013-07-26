@@ -47,8 +47,22 @@ describe Configurethis do
     context "when values are set" do
       Given (:config) { RiakConfig }
       Then  { expect(config.pb_port).to   eq(9002) }
-      And   { expect(config.http_port).to eq(9000) }
-      And   { expect(config.host).to      eql('127.0.0.1') }
+      Then  { expect(config.http_port).to eq(9000) }
+      Then  { expect(config.host).to      eql('127.0.0.1') }
+
+      context "and nested" do
+        Then { expect(config.riak_control.cert).to eql('/opt/local/var/riak-1.2.0/riak.crt') }
+        Then { expect(config.production.riak_control.cert).to eql('/opt/local/var/riak-1.1.0/riak.crt') }
+      end
+
+      context "and deeply nested" do
+        Given (:nested_config) { NestedConfig }
+        Then { expect(nested_config.level1.level2.level3.level4).to eql("Hello World") }
+
+        context "and the value is not set" do
+          Then { expect{ nested_config.level1.level2.level7 }.to raise_error(RuntimeError, "Nested value 'level7' is not configured in #{nested_config.configuration_path}") }
+        end
+      end
     end
   end
 end
