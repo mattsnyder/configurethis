@@ -1,54 +1,44 @@
 require "configurethis/version"
 require "configurethis/value_container"
+require "configurethis/configuration"
 require "configurethis/configurethis_properties"
 
 module Configurethis
-
   class << self
     def root_path=(path)
       ConfigurethisProperties.root_path = path
     end
 
-    def defaults
-      ConfigurethisProperties.defaults
+    def use_defaults
+      ConfigurethisProperties.use_defaults
     end
   end
 
-  def set_root=(value)
-    reset_configuration
-    @configuration = configuration.fetch(value.to_s)
-  rescue KeyError
-    raise "'#{value.to_s}' is not configured in #{configuration_path}"
+  def configuration_path
+    configuration.path
+  end
+
+  def set_root=(key)
+    configuration.root = key.to_s
   end
 
   def configure_this_with(path)
     @configuration_file = path
   end
 
-  def configuration_path
-    File.join(ConfigurethisProperties.root_path, configuration_file)
+  def method_missing(method, *args)
+    configuration[method.to_s]
   end
 
-  def method_missing(method, *args)
-    val = configuration.fetch(method.to_s)
-    return ValueContainer.new(val, configuration_path) if val.is_a?(Hash)
-    val
-  rescue KeyError
-    raise "'#{method.to_s}' is not configured in #{configuration_path}"
+  def reload_configuration
+    @configuration = nil
+    return self
   end
 
   def configuration
-    @configuration ||= reset_configuration
+    @configuration ||= Configuration.new(configuration_file)
   end
   protected :configuration
-
-
-  def reset_configuration
-    @configuration = File.open(configuration_path){ |f| YAML::load(f) }
-  rescue Exception => caught
-    raise "Could not locate configuration file for #{self} at #{configuration_path}"
-  end
-  private :reset_configuration
 
   def configuration_file
     @configuration_file ||= underscore(self.to_s) + '.yml'
@@ -67,5 +57,4 @@ module Configurethis
     word
   end
   private :underscore
-
 end

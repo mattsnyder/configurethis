@@ -3,30 +3,29 @@ require 'spec_helper'
 describe Configurethis do
   describe "making a class configurable from a yml file" do
     context "when the base path is unmodified" do
-      Given { Configurethis.defaults }
+      Given { Configurethis.use_defaults }
       Given (:klass) { ConventionalPath }
-      Then  { expect(klass.configuration_path).to eql('config/conventional_path.yml') }
+      Then  { expect(klass.configuration_path).to eql('/conventional_path.yml') }
     end
 
     context "when the base configuration path has been modified" do
-      Given { Configurethis.root_path = './spec/support' }
+      Given { Configurethis.root_path = '/my/custom/path' }
 
       context "and the class specifies it's own configuration filename" do
         Given (:klass) { OverridePath }
-        Then  { expect(klass.configuration_path).to eql('./spec/support/configure/custom.yml') }
+        Then  { expect(klass.configuration_path).to eql('/my/custom/path/configure/custom.yml') }
       end
 
-      describe "and the class relies on cenvention over configuration for filename" do
+      describe "and the class relies on convention over configuration for filename" do
         context "and there is no namespace" do
-          Given (:klass) { ConventionalPath }
-          Then  { expect(klass.configuration_path).to eql('./spec/support/conventional_path.yml') }
+          Given (:klass) { ConventionalPath.reload_configuration }
+          Then  { expect(klass.configuration_path).to eql('/my/custom/path/conventional_path.yml') }
         end
 
         context "and the class is namespaced" do
           Given (:klass) { MyModule::ConventionalPath }
-          Then  { expect(klass.configuration_path).to eql('./spec/support/my_module/conventional_path.yml') }
+          Then  { expect(klass.configuration_path).to eql('/my/custom/path/my_module/conventional_path.yml') }
         end
-
       end
     end
   end
@@ -56,7 +55,7 @@ describe Configurethis do
 
     context "when the classes config file does not exist" do
       Given (:config) { MissingConfiguration }
-      Then  { expect{ config.some_value }.to raise_error(RuntimeError, "Could not locate configuration file for MissingConfiguration at #{config.configuration_path}") }
+      Then  { expect{ config.some_value }.to raise_error(RuntimeError, "Could not locate configuration file: #{config.configuration_path}") }
     end
 
     context "when the value has not been set" do
