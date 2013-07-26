@@ -5,4 +5,4 @@ rvm:
   - "1.8.7"
   - ree
 script:
-  - rspec
+  - rspec --format documentation
