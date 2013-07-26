@@ -4,7 +4,7 @@ describe Configurethis do
   describe "making a class configurable from a yml file" do
     context "when the base path is unmodified" do
       Given { Configurethis.use_defaults }
-      Given (:klass) { ConventionalPath }
+      Given (:klass) { ConventionalPath.reload_configuration }
       Then  { expect(klass.configuration_path).to eql('/conventional_path.yml') }
     end
 
