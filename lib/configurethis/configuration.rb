@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Configurethis
   class Configuration
     attr_reader :path
@@ -22,7 +24,7 @@ module Configurethis
     end
 
     def load_configuration
-      File.open(path){ |f| YAML::load(f) }
+      File.open(path){ |f| ::YAML::load(f) }
     rescue Exception => caught
       raise "Could not locate configuration file: #{path}"
     end
