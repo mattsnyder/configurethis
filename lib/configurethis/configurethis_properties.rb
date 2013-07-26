@@ -1,15 +1,19 @@
-class ConfigurethisProperties
+module Configurethis
 
-  def self.root_path=(path)
-    @@root_path = path
-  end
+  class ConfigurethisProperties
 
-  def self.root_path
-    @@root_path ||= 'config'
-  end
+    def self.root_path=(path)
+      @@root_path = path
+    end
 
-  def self.defaults
-    @@root_path = nil
+    def self.root_path
+      @@root_path ||= 'config'
+    end
+
+    def self.defaults
+      @@root_path = nil
+    end
+
   end
 
 end

@@ -1,4 +1,3 @@
-require 'ostruct'
 require "configurethis/version"
 require "configurethis/value_container"
 require "configurethis/configurethis_properties"
