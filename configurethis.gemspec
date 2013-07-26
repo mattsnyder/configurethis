@@ -8,9 +8,9 @@ Gem::Specification.new do |gem|
   gem.version       = Configurethis::VERSION
   gem.authors       = ["Matt Snyder"]
   gem.email         = ["snyder2112@me.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Clean up your configuration approach by using Configurethis. Configurethis allows you to access your config values using method names instead of string literals to identify which config value you want to retrieve.}
+  gem.summary       = gem.description
+  gem.homepage      = "https://github.com/mattsnyder/configurethis"
 
   gem.add_development_dependency "rspec-given", ">= 3.0.0"
 
