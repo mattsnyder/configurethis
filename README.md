@@ -1,5 +1,5 @@
+[![Build Status](https://travis-ci.org/mattsnyder/configurethis.png?branch=master)](https://travis-ci.org/mattsnyder/configurethis)
 # Configurethis
-
 Clean up your configuration approach by using Configurethis. Configurethis allows you to access your config values using
 method names instead of string literals to identify which config value you want to retrieve. 
 
