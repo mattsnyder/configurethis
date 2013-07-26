@@ -38,6 +38,11 @@ describe Configurethis do
       Given (:rails_config) { RailsAppConfig }
       Given { rails_config.set_root = :development }
       Then  { expect(rails_config.assets.compile).to be_false }
+
+      describe "and then we change the root value and access more values" do
+        Given { rails_config.set_root = :production }
+        Then  { expect(rails_config.assets.compile).to be_true }
+      end
     end
 
     context "when the root value does not exist" do

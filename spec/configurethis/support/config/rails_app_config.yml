@@ -2,3 +2,7 @@
 development:
   assets:
     compile: false
+
+production:
+  assets:
+    compile: true

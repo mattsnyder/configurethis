@@ -15,6 +15,7 @@ module Configurethis
   end
 
   def set_root=(value)
+    reset_configuration
     @configuration = configuration.fetch(value.to_s)
   rescue KeyError
     raise "'#{value.to_s}' is not configured in #{configuration_path}"
@@ -37,11 +38,17 @@ module Configurethis
   end
 
   def configuration
-    @configuration ||= File.open(configuration_path){ |f| YAML::load(f) }
+    @configuration ||= reset_configuration
+  end
+  protected :configuration
+
+
+  def reset_configuration
+    @configuration = File.open(configuration_path){ |f| YAML::load(f) }
   rescue Exception => caught
     raise "Could not locate configuration file for #{self} at #{configuration_path}"
   end
-  protected :configuration
+  private :reset_configuration
 
   def configuration_file
     @configuration_file ||= underscore(self.to_s) + '.yml'
