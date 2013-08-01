@@ -71,7 +71,7 @@ Configurethis.root_path = File.join(Rails.root, "config")
 
 If your configuration is dependent on environment variables, you can specify it (Unfortunately at this time you need to do this once per each class that is environmentally dependent):
 ```ruby
-MyConfigurationClass.set_root = RAILS_ENV
+MyConfigurationClass.set_root = Rails.env
 ```
 
 ### Creating a configuration
