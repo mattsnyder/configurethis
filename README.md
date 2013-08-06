@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/mattsnyder/configurethis.png?branch=master)](https://travis-ci.org/mattsnyder/configurethis)
+[![Code Climate](https://codeclimate.com/repos/5201505856b1022e8f000a78/badges/b728182dffefc2f344ab/gpa.png)](https://codeclimate.com/repos/5201505856b1022e8f000a78/feed)
 # Configurethis
 Clean up your configuration approach by using Configurethis. Configurethis allows you to access your config values using
 method names instead of string literals to identify which config value you want to retrieve. 
