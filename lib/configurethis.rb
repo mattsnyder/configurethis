@@ -1,7 +1,7 @@
 require "configurethis/version"
 require "configurethis/value_container"
-require "configurethis/mock_configuration"
 require "configurethis/configuration"
+require "configurethis/mock_configuration"
 require "configurethis/configurethis_properties"
 
 module Configurethis
