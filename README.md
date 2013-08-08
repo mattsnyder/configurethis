@@ -108,6 +108,26 @@ class IWantToBeDifferent
 end
 ```
 
+### Testing
+While working with Configurethis in your specs/tests you can override the configuration
+and avoid using the real configuration files to simulate behavior. This enables you to 
+avoid using messing stubbing hierarchies and keep your tests clean!
+
+Just pass a hash representing your configuration to `#test_with`.
+
+```ruby
+# my_configuration.rb
+class BourbonConfig
+  extend Configurethis
+end
+
+# my_behavior_spec.rb
+it "should do some drinking" do
+  BourbonConfiguration.test_with({"bourbons" => {"Woodford" => "awesome", "Buffalo Trace" => "ok"} })
+  expect( my_behavior.drink("Woodford") ).to eql("awesome") # => true
+end
+```
+
 ## Contributing
 
 1. Fork it

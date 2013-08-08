@@ -1,5 +1,6 @@
 require "configurethis/version"
 require "configurethis/value_container"
+require "configurethis/mock_configuration"
 require "configurethis/configuration"
 require "configurethis/configurethis_properties"
 
@@ -20,6 +21,17 @@ module Configurethis
 
   def set_root=(key)
     configuration.root = key.to_s
+  end
+
+  # Meant for testing different scenarios
+  # and avoid using the real configuration
+  # values in your tests/specs.
+  #
+  # To use, pass a hash that represents the
+  # values you like so that it mirrors the yml files
+  # structure.
+  def test_with(values)
+    @configuration = MockConfiguration.new values
   end
 
   def configure_this_with(path)

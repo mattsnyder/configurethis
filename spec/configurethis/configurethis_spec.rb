@@ -50,6 +50,29 @@ describe Configurethis do
     end
   end
 
+  describe "providing test values to use" do
+    after(:each) { NestedConfig.reload_configuration }
+    Given (:config) { NestedConfig }
+
+    context "when no test values are passed" do
+      Given { config.test_with(Hash.new) }
+      Then  { expect{ config.level1 }.to raise_error(RuntimeError, "'level1' is not configured in <mocked_configuration>") }
+    end
+
+    context "when values are passed" do
+      Given { config.test_with({ "level100" => "faked out!"}) }
+      Then  { expect( config.level100 ).to eql( "faked out!" ) }
+
+      context "and root value is set" do
+        Given { config.test_with( {"qa" => { "alpha" => "a" }, "alpha" => "wrong one"} ) }
+        Given { config.set_root = "qa" }
+        Then  { expect( config.alpha ).to eql( "a" ) }
+      end
+    end
+
+
+  end
+
   describe "using configured values" do
     Given { Configurethis.root_path = File.join(File.dirname(__FILE__), 'support/config') }
 
