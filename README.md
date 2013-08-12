@@ -108,6 +108,13 @@ class IWantToBeDifferent
 end
 ```
 
+### Validation
+If you are having problems and everything "looks clear", try running your YAML through a [YAML lint test](http://yamllint.com). 
+Ruby has been known to be forgiving to poorly formatted YAML in some versions, but not others.
+
+### Running the tests
+Just run rspec from your prompt! The tests are also contain great examples about how to use Configurethis.
+
 ### Testing
 While working with Configurethis in your specs/tests you can override the configuration
 and avoid using the real configuration files to simulate behavior. This enables you to 
