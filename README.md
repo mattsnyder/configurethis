@@ -4,6 +4,28 @@
 Clean up your configuration approach by using Configurethis. Configurethis allows you to access your config values using
 method names instead of string literals to identify which config value you want to retrieve. 
 
+## Quick example
+```ruby
+# lib/password_settings.rb
+class PasswordSettings
+  extend Configurethis
+end
+
+# some_ruby_file_in_my_app.rb
+PasswordSettings.min_length        #=> 10
+PasswordSettings.require_uppercase #=> true
+PasswordSettings.storage.keep_last #=> 3
+```
+```yml
+---
+# config/password_settings.yml
+minLength: 10
+require_uppercase: true
+storage:
+  keep_last: 3
+```
+
+## Why?
 Typical Ruby code has craziness like this all over the place:
 ```ruby
 # config/initializers/load_config.rb
@@ -42,7 +64,7 @@ storage:
   keep_last: 3
 ```
 
-## Installation
+## Get started with Configurethis!
 
 Add this line to your application's Gemfile:
 
@@ -56,7 +78,7 @@ Or install it yourself as:
 
     $ gem install configurethis
 
-## Usage
+## How to?
 
 ### Setup
 To get started, specify where you want `Configurethis` to look for your .yml files at.
