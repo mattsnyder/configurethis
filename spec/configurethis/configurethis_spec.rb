@@ -69,12 +69,27 @@ describe Configurethis do
         Then  { expect( config.alpha ).to eql( "a" ) }
       end
     end
-
-
   end
 
   describe "using configured values" do
     Given { Configurethis.root_path = File.join(File.dirname(__FILE__), 'support/config') }
+
+    describe "and inspecting configuration keys" do
+      after(:each) { KeysConfig.reload_configuration }
+      Given (:config) { KeysConfig }
+
+      context "when value is a hash" do
+        Then  { expect( config.beer.brewery.keys ).to match_array(["stone", "victory"]) }
+      end
+
+      context "when value is an array" do
+        Then  { expect{ config.beer.brewery.stone.keys }.to raise_error(NoMethodError) }
+      end
+
+      context "when value is an unassigned value" do
+        Then  { expect{ config.bourbon.distillery.woodford.keys }.to raise_error(NoMethodError) }
+      end
+    end
 
     context "when the classes config file does not exist" do
       Given (:config) { MissingConfiguration }

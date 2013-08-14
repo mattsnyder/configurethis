@@ -5,6 +5,10 @@ module Configurethis
       @config_path = config_path
     end
 
+    def keys
+      @original_value.keys
+    end
+
     def method_missing(method, *args)
       val = @original_value.fetch(method.to_s)
       return ValueContainer.new(val, @config_path) if val.is_a?(Hash)

@@ -1,5 +1,6 @@
 %w[
   conventional_path
+  keys_config
   missing_configuration
   namespaced_conventional_path
   nested_config

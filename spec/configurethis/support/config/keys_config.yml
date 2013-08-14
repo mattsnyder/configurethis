@@ -1,0 +1,15 @@
+beer:
+  brewery:
+    stone:
+      - "IPA"
+      - "Ruination"
+      - "Imperial Stout"
+    victory:
+      - "Hop devil"
+      - "Prima Pils"
+bourbon:
+  distillery:
+    woodford:
+    buffalo_trace:
+    makers_mark:
+  

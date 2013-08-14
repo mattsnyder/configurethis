@@ -130,6 +130,25 @@ class IWantToBeDifferent
 end
 ```
 
+### Inspecting keys for a hash value
+Sometimes you may want to iterate over the keys of a configured hash. You can do this by calling `#keys` on the hash to retrieve a list of the keys.
+For example, if your YAML is represented as:
+```yml
+---
+bourbon:
+  distillery:
+    woodford:
+      # more data on woodford
+    buffalo_trace:
+      # more stuff
+    makers_mark:
+      # makers stuff
+```
+And let's assume our configuration class is called `BourbonConfig`, we could retrieve a list of distilleries using `#keys`:
+```ruby
+BourbonConfig.bourbon.distillery.keys #=> ["woodford", "buffalo_trace", "makers_mark"]
+```
+
 ### Validation
 If you are having problems and everything "looks clear", try running your YAML through a [YAML lint test](http://yamllint.com). 
 Ruby has been known to be forgiving to poorly formatted YAML in some versions, but not others.
